@@ -1,1 +1,1 @@
-# Prime_Video-SQL-Project
+# Prime Video Movies and TV Shows using SQL

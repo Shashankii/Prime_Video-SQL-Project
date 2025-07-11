@@ -2,7 +2,8 @@
 
 ![Prime Video Logo](https://github.com/Shashankii/Prime_Video-SQL-Project/blob/main/logo..jpeg)
 
-📘 Overview
+📘 ## Overview
+
 This project analyzes PrimeVideo content data using SQL to uncover trends in content type, ratings, genres, countries, and actors. It answers real-world business questions through structured queries using PostgreSQL.
 
 🎯 Objectives

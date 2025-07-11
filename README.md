@@ -61,6 +61,7 @@ CREATE TABLE PrimeVideo(
 📚 Business Problems and SQL Solutions
 
 1. Count the Number of Movies vs TV Shows
+
 SELECT type, 
        COUNT(*) AS total_content
 FROM PrimeVideo
@@ -104,4 +105,88 @@ FROM PrimeVideo
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 5;
+
+5. Identify the Longest Movie
+
+SELECT * FROM PrimeVideo
+WHERE type = 'Movie'
+  AND duration = (SELECT MAX(duration) FROM PrimeVideo);
+
+6. Find All Content Added in the Last 5 Years
+
+SELECT * FROM PrimeVideo
+WHERE TO_DATE(date_added, 'Month DD,YYYY') >= CURRENT_DATE 
+
+7. How Many Movies Have Been Directed by "Rajiv Chilaka"?
+
+SELECT * FROM PrimeVideo
+WHERE director ILIKE '%Rajiv Chilaka%';
+
+8. List All TV Shows with More Than 5 Seasons
+
+SELECT *
+FROM PrimeVideo
+WHERE type = 'TV Show'
+  AND CAST(SPLIT_PART(duration, ' ', 1) AS INTEGER) > 5;
+
+9. Count the Number of Content Items in Each Genre
+
+SELECT UNNEST(STRING_TO_ARRAY(listed_in, ',')) AS genre,
+       COUNT(show_id) AS total_content
+FROM PrimeVideo
+GROUP BY genre;
+
+10. Top 5 Years with Highest Average Content Release in India
+
+SELECT EXTRACT(YEAR FROM TO_DATE(date_added, 'Month, DD, YYYY')) AS year,
+       COUNT(*) AS yearly_report,
+       ROUND(
+         COUNT(*)::numeric / (SELECT COUNT(*) FROM PrimeVideo WHERE country = 'India')::numeric * 100, 2
+       ) AS avg_content_per_year
+FROM PrimeVideo
+WHERE country = 'India'
+GROUP BY 1
+ORDER BY avg_content_per_year DESC
+LIMIT 5;
+
+11. List All Movies That Are Documentaries
+
+SELECT * FROM PrimeVideo
+WHERE listed_in LIKE 'Documentaries%';
+
+12. Find All Content Without a Director
+
+SELECT * FROM PrimeVideo
+WHERE director IS NULL;
+
+13. Find How Many Movies Actor 'Salman Khan' Appeared in the Last 10 Years
+
+SELECT * FROM PrimeVideo
+WHERE casts ILIKE '%Salman Khan%'
+  AND release_year >= 2015;
+
+14. Top 10 Actors in Movies Produced in India
+
+SELECT UNNEST(STRING_TO_ARRAY(casts, ',')) AS actors,
+       COUNT(*) AS total_content
+FROM PrimeVideo
+WHERE country ILIKE '%India%'
+GROUP BY actors
+ORDER BY total_content DESC
+LIMIT 10;
+
+15. Categorize Content as 'Good' or 'Bad' Based on Keywords
+
+SELECT
+	  CASE
+	  WHEN 
+	       description ILIKE '%kill%' 
+	       OR
+	       description ILIKE '%violence%' THEN 'Bad_content'
+	       ELSE 'Good_content'
+	       END AS category,
+		   
+COUNT(*) AS total_items
+FROM PrimeVideo
+GROUP BY category;
 

@@ -20,17 +20,29 @@ Dataset Link: [Movies Dataset](https://github.com/Shashankii/Prime_Video-SQL-Pro
 Columns include:
 
 show_id
+
 type
+
 title
+
 director
+
 cast
+
 country
+
 date_added
+
 release_year
+
 rating
+
 duration
+
 listed_in
+
 description
+
 
 🎯 Key SQL Concepts Used
 
